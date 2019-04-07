@@ -1,0 +1,25 @@
+Python Errors
+
+Problem 1:
+
+	TypeError: 'module' object is not callable
+	
+Solution:
+	
+		Please check import statement for the module to be set if user calls the class in another class or python file.
+		
+		
+Python Naming convetions
+
+	https://www.python.org/dev/peps/pep-0008/#naming-conventions
+	
+
+Problem 2:
+	
+		missing 1 required positional argument: 'self'
+		
+Solution:
+
+		Need to check self variable on function or method initiating
+		
+	
