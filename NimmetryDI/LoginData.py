@@ -1,10 +1,11 @@
 import requests
 
 #Login to App , Get Inputs from Console
-url = input('Enter REST EndPoint URL to login : ')
+url = 'https://restapi.nimmetry.com/api/user/login'
 
-loginId = input('Enter userName:: ')
-loginPassword = input ('Enter login password:: ')
+print('Enter Details to access Data Integrator')
+loginId = input('Enter Login userName:: \n')
+loginPassword = input ('Enter Login password:: \n')
 
 
 jsonData = {"user":{"loginId":loginId,"password":loginPassword}}
@@ -21,29 +22,46 @@ print("Successfully connected to NDI API.. ")
 
 # Fetch list of domains
 
-url1 = input('Enter EndPoint URL to fetch Domains List:: ')
-headers1 = {'x-access-token': tokenAccess}
+domainURL = 'https://restapi.nimmetry.com/api/domain'
+accessDToken = {'x-access-token': tokenAccess}
 
-resp1 = requests.get(url1,headers1)
+resp1 = requests.get(domainURL,accessDToken)
 if resp1.status_code != 201:
     print('GET /tasks/ {}'.format(resp1.status_code))
 
+Domain = resp1.json()["message"]
+
+
 print(resp1.json())
+print(resp1.json()["success"])
+print(resp1.json()["message"])
 print("\n Successfully Fetched  List of domains")
 
-#domainId = resp1.json()['message']['_id']
+loadDomain = []
 
-#print('Domain Id is: '+domainId)
+loadDInput = input("Enter loadID based on Name and its index ::\n")
 
-url2 = input('Enter load list from domain ::')
+for entry in resp1.json()['message']:
+    domainId = entry['_id']
+ #   print(domainId)
+    if loadDInput == domainId:
+        url2 = 'https://restapi.nimmetry.com/api/load/domain/' + loadDInput
+  #     print(url2)
+        headers2 = {'x-access-token': tokenAccess}
+        resp2 = requests.get(url2, headers=headers2)
+        loadData = resp2.json()
+  #     print(loadData)
+        for test in resp2.json()['message']:
+            name = test['name']
+            sourceName = test['source']['name']
+            sourceTimeStamp = test['source']['createdTimestamp']
+            targetName = test['target']['name']
+            targetTimeStamp = test['target']['createdTimestamp']
+            print(name+' :: '+sourceName+':: '+sourceTimeStamp)
+            print(name + ' :: ' + targetName + ':: ' + targetTimeStamp)
 
 
-headers2 = {'x-access-token': tokenAccess}
-resp2 = requests.get(url2,headers=headers2)
-
-loadData = resp2.json()
-print(loadData)
-print("succesfully fetched list of data...")
 
 
 
+print('End of program')
