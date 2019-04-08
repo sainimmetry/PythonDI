@@ -3,8 +3,6 @@ import logging
 import requests
 
 logging.basicConfig(filename="Application.log", format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S',
-                    level=logging.INFO)
-logging.basicConfig(filename="Application.log", format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S',
                     level=logging.DEBUG)
 
 
@@ -28,7 +26,7 @@ class RequestHandler:
             return user_response
 
         except Exception as post_error:
-            logging.error('Error while post data to api call ', post_error.__str__())
+            logging.exception('Error while post data to api call ' + post_error.__str__())
 
     @staticmethod
     def get_request_handler(end_point, header):
@@ -48,4 +46,4 @@ class RequestHandler:
             return get_response
 
         except Exception as get_error:
-            logging.error('Error while get data from api call ', get_error.__str__())
+            logging.exception('Error while get data from api call ', get_error.__str__())

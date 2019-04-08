@@ -3,10 +3,7 @@ import logging
 from com.nimmetry.utils.RequestHandler import RequestHandler
 
 logging.basicConfig(filename="Application.log", format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S',
-                    level=logging.INFO)
-
-logging.basicConfig(filename="Application.log", format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S',
-                    level=logging.ERROR)
+                    level=logging.DEBUG)
 
 
 class LoadListData:
@@ -22,7 +19,7 @@ class LoadListData:
             logging.info('Completes rest_call function')
             logging.info('Exit from init fn().. ')
         except Exception as init_error:
-            logging.error('Error ' + init_error.__str__())
+            logging.exception('Error ' + init_error.__str__())
         else:
             logging.info('Successfully completed init Fn() ')
 
@@ -52,7 +49,7 @@ class LoadListData:
             LoadListData.domain_list_data(api_url=api_url, access_token=access_token, request_object=request_handler)
             return_value = True
         except Exception as rest_call_error:
-            print('Error While calling ' + rest_call_error.__str__())
+            logging.exception('Error While calling ' + rest_call_error.__str__())
             return_value = False
 
         return return_value
@@ -86,9 +83,10 @@ class LoadListData:
                     logging.info('load data from selected domain')
                     LoadListData.load_data(api_url=api_url, load_domain_input=user_load_domain_input,
                                            request_object=request_object, access_token=access_token)
+                    logging.info('Completed and exit from domain_list_data fn() ')
 
         except Exception as data_error:
-            print(data_error)
+            logging.exception('Data Error while processing ' + data_error.__str__(), data_error)
 
     @staticmethod
     def load_data(api_url, load_domain_input, request_object, access_token):
@@ -112,4 +110,4 @@ class LoadListData:
                     + src_timestamp + ' Target:: ' + target_name + ' target ts:: ' + target_timestamp)
 
         except Exception as load_data_error:
-            logging.error('Error while fetching load data ' + load_data_error.__str__(), load_data_error)
+            logging.exception('Error while fetching load data ' + load_data_error.__str__(), load_data_error)
