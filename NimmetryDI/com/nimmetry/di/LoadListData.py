@@ -15,7 +15,7 @@ class LoadListData:
             self.password = password
             self.api_url = api_url
             logging.info(' Initializing rest_call fn().. ')
-            self.result = LoadListData.user_login(user_name=user_name, password=password, api_url=api_url)
+            LoadListData.user_login(user_name=user_name, password=password, api_url=api_url)
             logging.info('Completes rest_call function')
             logging.info('Exit from init fn().. ')
         except Exception as init_error:
@@ -47,12 +47,12 @@ class LoadListData:
 
             # Calling domain list and load
             LoadListData.domain_list_data(api_url=api_url, access_token=access_token, request_object=request_handler)
-            return_value = True
+
         except Exception as rest_call_error:
             logging.exception('Error While calling ' + rest_call_error.__str__())
-            return_value = False
 
-        return return_value
+
+
 
 
     def domain_list_data(api_url, access_token, request_object):
