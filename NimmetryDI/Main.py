@@ -23,7 +23,9 @@ send_details = input('Are you sure to proceed (yes/no)? (yes) ::\n')
 if send_details.lower() == 'yes':
     loadData = LoadListData(user_name=username, password=password, api_url=api_url)
 else:
-    print('Please enter valid details')
-    sys.exit()
+    print('Please re-run and enter valid details')
 
-logging.info('Script ends at ' + datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S'))
+
+ts1 = time.time()
+
+logging.info('Script ends at ' + datetime.datetime.fromtimestamp(ts1).strftime('%Y-%m-%d %H:%M:%S'))
