@@ -11,6 +11,7 @@ class LoadListData:
     def __init__(self, user_name, password, api_url):
         try:
             logging.info('Enters into init Fn().. ')
+            logging.TRA
             self.user_name = user_name
             self.password = password
             self.api_url = api_url
@@ -60,9 +61,9 @@ class LoadListData:
             # Domains List
             logging.info('Trying to fetch list of domains in api')
             domain_url = api_url + '/domain'
-            access_domain_token = {'x-access-token': access_token}
+            # access_domain_token = {'x-access-token': access_token}
             logging.info("Initiating the Rest Call Function with url " + domain_url)
-            resp1 = request_object.get_request_handler(end_point=domain_url, header=access_domain_token)
+            resp1 = request_object.get_request_handler(end_point=domain_url, header=access_token)
             logging.info("\n Successfully Fetched  List of domains")
 
             # load from domain list by fetching the list
@@ -94,10 +95,10 @@ class LoadListData:
             logging.info('Enters into load_data fn()')
             load_domain_url = api_url + '/load/domain/' + load_domain_input
             logging.info('load data domain url :' + load_domain_url)
-            load_data_header = {'x-access-token': access_token}
+        #    load_data_header = {'x-access-token': access_token}
             logging.info('Enters into Get Request Handler...::')
             load_response = request_object.get_request_handler(end_point=load_domain_url,
-                                                               header=load_data_header)
+                                                               header=access_token)
 
             for test in load_response.json()['message']:
                 name = test['name']
