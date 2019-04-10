@@ -1,4 +1,5 @@
 import logging
+from com.nimmetry.utils.Constants import USER_API, LOAD_DOMAIN_DATA, DOMAIN_LIST
 
 from com.nimmetry.utils.RequestHandler import RequestHandler
 
@@ -36,7 +37,7 @@ class LoadListData:
         try:
             # Trying to login into API with User Credentials
             logging.info('Trying to login into API with User Credentials')
-            login_url = api_url + '/user/login'
+            login_url = api_url + USER_API
             logging.debug("Initiating the Rest Call Function with url " + login_url)
             login_user_data = {"user": {"loginId": user_name, "password": password}}
             # Call Post method from Request handler
@@ -59,7 +60,7 @@ class LoadListData:
         try:
             # Domains List
             logging.info('Trying to fetch list of domains in api')
-            domain_url = api_url + '/domain'
+            domain_url = api_url + DOMAIN_LIST
             # access_domain_token = {'x-access-token': access_token}
             logging.debug("Initiating the Rest Call Function with url " + domain_url)
             resp1 = request_object.get_request_handler(end_point=domain_url, header=access_token)
@@ -92,7 +93,7 @@ class LoadListData:
     def load_data(api_url, load_domain_input, request_object, access_token):
         try:
             logging.info('Enters into load_data fn()')
-            load_domain_url = api_url + '/load/domain/' + load_domain_input
+            load_domain_url = api_url + LOAD_DOMAIN_DATA + load_domain_input
             #    load_data_header = {'x-access-token': access_token}
             logging.debug('Enters into Get Request Handler...::' + load_domain_url)
             load_response = request_object.get_request_handler(end_point=load_domain_url,
