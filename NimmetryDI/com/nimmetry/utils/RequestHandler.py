@@ -33,7 +33,8 @@ class RequestHandler:
         try:
             logging.info('Enter into get_request_handler fn() ')
             logging.debug('EndPoint url for get method: ' + end_point)
-            get_response = requests.get(end_point, headers=header)
+            access_domain_token = {'x-access-token': header}
+            get_response = requests.get(end_point, headers=access_domain_token)
 
             if get_response.status_code == 200:
                 logging.info('GET /tasks/ {}'.format(get_response.status_code))
