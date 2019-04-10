@@ -11,7 +11,6 @@ class LoadListData:
     def __init__(self, user_name, password, api_url):
         try:
             logging.info('Enters into init Fn().. ')
-            logging.TRA
             self.user_name = user_name
             self.password = password
             self.api_url = api_url
@@ -31,14 +30,14 @@ class LoadListData:
     @return
     '''
 
-    @staticmethod
+
     def user_login(user_name, password, api_url):
 
         try:
             # Trying to login into API with User Credentials
             logging.info('Trying to login into API with User Credentials')
             login_url = api_url + '/user/login'
-            logging.info("Initiating the Rest Call Function with url " + login_url)
+            logging.debug("Initiating the Rest Call Function with url " + login_url)
             login_user_data = {"user": {"loginId": user_name, "password": password}}
             # Call Post method from Request handler
             logging.info('Call Post method from Request handler')
@@ -55,14 +54,14 @@ class LoadListData:
 
         return return_value
 
-    @staticmethod
+
     def domain_list_data(api_url, access_token, request_object):
         try:
             # Domains List
             logging.info('Trying to fetch list of domains in api')
             domain_url = api_url + '/domain'
             # access_domain_token = {'x-access-token': access_token}
-            logging.info("Initiating the Rest Call Function with url " + domain_url)
+            logging.debug("Initiating the Rest Call Function with url " + domain_url)
             resp1 = request_object.get_request_handler(end_point=domain_url, header=access_token)
             logging.info("\n Successfully Fetched  List of domains")
 
@@ -81,7 +80,7 @@ class LoadListData:
                 domain_id_1 = entry['_id']
                 if user_load_domain_input == domain_id_1:
                     # load data from selected domain
-                    logging.info('load data from selected domain')
+                    logging.info('loading data from selected domain')
                     LoadListData.load_data(api_url=api_url, load_domain_input=user_load_domain_input,
                                            request_object=request_object, access_token=access_token)
                     logging.info('Completed and exit from domain_list_data fn() ')
@@ -89,17 +88,16 @@ class LoadListData:
         except Exception as data_error:
             logging.exception('Data Error while processing ' + data_error.__str__(), data_error)
 
-    @staticmethod
+
     def load_data(api_url, load_domain_input, request_object, access_token):
         try:
             logging.info('Enters into load_data fn()')
             load_domain_url = api_url + '/load/domain/' + load_domain_input
-            logging.info('load data domain url :' + load_domain_url)
-        #    load_data_header = {'x-access-token': access_token}
-            logging.info('Enters into Get Request Handler...::')
+            #    load_data_header = {'x-access-token': access_token}
+            logging.debug('Enters into Get Request Handler...::' + load_domain_url)
             load_response = request_object.get_request_handler(end_point=load_domain_url,
                                                                header=access_token)
-
+            logging.debug('load data from domain response ::' + load_response.__str__())
             for test in load_response.json()['message']:
                 name = test['name']
                 source_name = test['source']['name']

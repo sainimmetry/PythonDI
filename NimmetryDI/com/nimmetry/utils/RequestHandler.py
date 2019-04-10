@@ -37,10 +37,10 @@ class RequestHandler:
             get_response = requests.get(end_point, headers=access_domain_token)
 
             if get_response.status_code == 200:
-                logging.info('GET /tasks/ {}'.format(get_response.status_code))
+                logging.debug('GET /tasks/ {}'.format(get_response.status_code))
             else:
                 logging.info('GET /tasks/ {}'.format(get_response.status_code))
-                logging.info('Please check the given details \n' + get_response.json())
+                logging.debug('Please check the given details \n' + get_response.json())
 
             logging.info('Exit from get_request_handler fn() ')
 
